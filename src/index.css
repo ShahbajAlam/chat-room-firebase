@@ -10,3 +10,19 @@
     box-sizing: border-box;
     font-family: "Montserrat", sans-serif;
 }
+
+.message_animation {
+    animation-name: bounce;
+    animation-duration: 300ms;
+    animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+    animation-fill-mode: backwards;
+}
+
+@keyframes bounce {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}

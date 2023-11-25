@@ -17,7 +17,7 @@ function App() {
     }, [auth, room]);
 
     return (
-        <div className="bg-[#28282B] min-h-screen px-2 py-4 flex justify-center items-center">
+        <div className="bg-[#28282B] min-h-screen px-2 flex justify-center items-center">
             <Routes>
                 <Route path="/" element={<Login />} />
                 <Route path="/joinroom" element={<JoinRoom />} />

@@ -1,56 +1,60 @@
-import { useEffect, useRef, useState } from "react";
 import {
+    query,
+    where,
     addDoc,
     collection,
     onSnapshot,
-    query,
-    where,
 } from "firebase/firestore";
+import { useEffect, useState } from "react";
 
+import ChatInput from "./ChatInput";
+import ChatHeader from "./ChatHeader";
+import Welcome from "./messages/Welcome";
 import { db } from "../config/firebase/firebase";
 import { errorToast } from "../toasts/errorToast";
+import MyMessage from "./messages/MyMessage";
 import { useAuth } from "../context/AuthContext";
+import TheirMessage from "./messages/TheirMessage";
+import { nameFormatter } from "../helpers/nameFormatter";
 
 function ChatPage() {
-    const messageRef = useRef(null);
-    const [users, setUsers] = useState([]);
     const [messages, setMessages] = useState([]);
-
-    const { username, setUsername, room, setInChat, setAuth, setRoom } =
+    const { username, auth, avatar, setUsername, room, setAuth, setRoom } =
         useAuth();
 
-    const sendMessage = async (type) => {
+    const sendMessage = async (type, text) => {
         const colRef = collection(db, "messages");
         try {
             await addDoc(colRef, {
                 room,
+                avatar,
                 username,
+                userID: auth,
                 sentAt: Date.now(),
-                message: {
-                    type,
-                    text: messageRef.current.value,
-                },
+                message: { type, text },
             });
         } catch (err) {
             errorToast(err.message);
         }
     };
+
     useEffect(() => {
         if (JSON.parse(localStorage.getItem("auth"))?.isInChat) return;
 
-        console.log("welcome");
-        const welcome = async (type) => {
+        const sendWelcomeMessage = async (type) => {
             const colRef = collection(db, "messages");
             try {
                 await addDoc(colRef, {
                     room,
+                    avatar,
                     username,
                     sentAt: Date.now(),
                     message: {
                         type,
-                        text: `${username} has joined`,
+                        text: `${nameFormatter(username)} has joined`,
                     },
                 });
+
                 localStorage.setItem(
                     "auth",
                     JSON.stringify({
@@ -59,28 +63,13 @@ function ChatPage() {
                     })
                 );
             } catch (err) {
-                console.log(err);
                 errorToast(err.message);
             }
         };
-        welcome("welcome");
+        sendWelcomeMessage("welcome");
     }, []);
 
     console.log(messages);
-
-    useEffect(() => {
-        const colRef = collection(db, "users");
-        const usersQuery = query(colRef, where("room", "==", room));
-        const unsubscribe = onSnapshot(usersQuery, (snapshot) => {
-            const user = [];
-            snapshot.forEach((snap) => {
-                user.push(snap.data().username);
-            });
-            setUsers([...new Set([...user])]);
-        });
-
-        return () => unsubscribe();
-    }, []);
 
     useEffect(() => {
         const colRef = collection(db, "messages");
@@ -89,10 +78,11 @@ function ChatPage() {
             const msg = [];
             snapshot.forEach((snap) => {
                 const messageObj = {
-                    username: snap.data().username,
-                    message: snap.data().message.text,
+                    avatar: snap.data()?.avatar,
                     sentAt: snap.data().sentAt,
                     type: snap.data().message.type,
+                    username: snap.data().username,
+                    message: snap.data().message.text,
                 };
                 msg.push(messageObj);
             });
@@ -111,7 +101,7 @@ function ChatPage() {
                 sentAt: Date.now(),
                 message: {
                     type: "left",
-                    text: `${username} has left`,
+                    text: `${nameFormatter(username)} has left`,
                 },
             });
         } catch (err) {
@@ -125,23 +115,47 @@ function ChatPage() {
     };
 
     return (
-        <div className="w-[50%] h-[60vh] mx-auto border-2 border-black">
-            <h1>Hello {username}</h1>
-            <div>
-                {messages.map((msg, i) => {
-                    if (username === msg.username)
+        <div className="w-full min-h-screen flex flex-col justify-between items-center">
+            <ChatHeader />
+            <div className="w-full rounded-3xl py-4 px-2 basis-[80%] grow bg-red-500">
+                {messages.map((msg) => {
+                    if (msg.username === username && msg.type === "welcome")
                         return (
-                            <p
-                                key={i}
-                                className="bg-blue-500 text-right w-fit max-w-[70%] ms-auto"
-                            >
-                                {msg.message}
-                            </p>
+                            <Welcome
+                                key={msg.sentAt}
+                                message={`Welcome to the chat, ${nameFormatter(
+                                    msg.username
+                                )}`}
+                            />
+                        );
+                    if (msg.username !== username && msg.type === "welcome")
+                        return (
+                            <Welcome key={msg.sentAt} message={msg.message} />
+                        );
+                    if (msg.username === username && msg.type === "message")
+                        return (
+                            <MyMessage
+                                key={msg.sentAt}
+                                time={msg.sentAt}
+                                avatar={msg.avatar}
+                                message={msg.message}
+                                userName={nameFormatter(msg.username)}
+                            />
+                        );
+                    if (msg.username !== username && msg.type === "message")
+                        return (
+                            <TheirMessage
+                                key={msg.sentAt}
+                                time={msg.sentAt}
+                                avatar={msg.avatar}
+                                message={msg.message}
+                                userName={nameFormatter(msg.username)}
+                            />
                         );
                     if (username !== msg.username && msg.type !== "left")
                         return (
                             <p
-                                key={i}
+                                key={msg.sentAt}
                                 className="bg-yellow-500 text-left w-fit max-w-[70%] me-auto"
                             >
                                 {msg.message}
@@ -150,12 +164,8 @@ function ChatPage() {
                     if (msg.type === "left")
                         return <p className="bg-red-700">{msg.message}</p>;
                 })}
-                <input type="text" ref={messageRef} />
-                <button onClick={sendMessage.bind(null, "message")}>
-                    Send
-                </button>
             </div>
-            <button onClick={logout}>Log Out</button>
+            <ChatInput sendMessage={sendMessage} />
         </div>
     );
 }
