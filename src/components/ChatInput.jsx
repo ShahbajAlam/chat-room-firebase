@@ -4,7 +4,7 @@ function ChatInput({ sendMessage }) {
     const [messageInput, setMessageInput] = useState("");
 
     return (
-        <div className="w-full rounded-full bg-yellow-400 px-4 py-2 flex justify-between items-center basis-[10%]">
+        <div className="w-full rounded-full bg-yellow-400 px-4 py-2 flex justify-between items-center grow-0 basis-[10%]">
             <input
                 type="text"
                 value={messageInput}
@@ -19,7 +19,7 @@ function ChatInput({ sendMessage }) {
                     sendMessage("message", messageInput);
                     setMessageInput("");
                 }}
-                className="w-[2.5rem] rounded-full basis-[15%]"
+                className="w-[2.75rem] rounded-full basis-[15%]"
             />
         </div>
     );

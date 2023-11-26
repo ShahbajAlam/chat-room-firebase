@@ -2,7 +2,7 @@ import { timeFormatter } from "../../helpers/timeFormatter";
 
 function TheirMessage({ message, userName, time, avatar }) {
     return (
-        <div className="w-fit max-w-[80%] me-auto text-[1rem] font-semibold mb-1 message_animation origin-bottom-left md:text-2xl md:py-1">
+        <div className="w-fit max-w-[90%] me-auto text-[1rem] font-semibold mb-1 message_animation origin-bottom-left md:text-2xl md:py-1">
             <div className=" flex justify-end items-end gap-2">
                 <img
                     src={avatar}
@@ -16,7 +16,7 @@ function TheirMessage({ message, userName, time, avatar }) {
                     <p className="break-words">{message}</p>
                 </div>
             </div>
-            <p className="text-xs text-gray-50 font-light ms-[3rem]">
+            <p className="text-xs text-gray-50 font-light ms-[2.5rem]">
                 {timeFormatter(time)}
             </p>
         </div>

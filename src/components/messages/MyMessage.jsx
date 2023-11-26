@@ -2,7 +2,7 @@ import { timeFormatter } from "../../helpers/timeFormatter";
 
 function MyMessage({ message, userName, time, avatar }) {
     return (
-        <div className="w-fit max-w-[80%] ms-auto text-[1rem] font-semibold mb-1 message_animation origin-bottom-right md:text-2xl md:py-1">
+        <div className="w-fit max-w-[90%] ms-auto text-[1rem] font-semibold mb-1 message_animation origin-bottom-right md:text-2xl md:py-1">
             <div className=" flex justify-end items-end gap-2">
                 <div className="bg-gradient-to-r from-[#8de9d5] to-[#32c4c0] px-4 py-1 rounded-3xl rounded-br-none text-gray-900 lg:text-base lg:px-6">
                     <p className="text-xs font-medium md:text-lg lg:text-sm">
@@ -16,7 +16,7 @@ function MyMessage({ message, userName, time, avatar }) {
                     className="w-[2rem] rounded-full"
                 />
             </div>
-            <p className="text-right text-xs text-gray-50 font-light me-[3rem]">
+            <p className="text-right text-xs text-gray-50 font-light me-[2.5rem]">
                 {timeFormatter(time)}
             </p>
         </div>
