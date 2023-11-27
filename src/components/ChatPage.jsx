@@ -16,18 +16,21 @@ import { useAuth } from "../context/AuthContext";
 import { nameFormatter } from "../helpers/nameFormatter";
 
 function ChatPage() {
+    const { username, avatar, room } = useAuth();
     const [messages, setMessages] = useState([]);
-    const { username, auth, avatar, setUsername, room, setAuth, setRoom } =
-        useAuth();
 
     const sendMessage = async (type, text) => {
+        if (!text) {
+            errorToast("Enter a message");
+            return;
+        }
+        
         const colRef = collection(db, "messages");
         try {
             await addDoc(colRef, {
                 room,
                 avatar,
                 username,
-                userID: auth,
                 sentAt: Date.now(),
                 message: { type, text },
             });

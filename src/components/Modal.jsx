@@ -1,6 +1,7 @@
 import { useRef } from "react";
-import { addDoc, collection } from "firebase/firestore";
+import { motion } from "framer-motion";
 import { useClickOutside } from "@react-hookz/web";
+import { addDoc, collection } from "firebase/firestore";
 
 import { db } from "../config/firebase/firebase";
 import { errorToast } from "../toasts/errorToast";
@@ -12,6 +13,8 @@ function Modal({ setIsModalOpen }) {
     const { room, username, setRoom, setUsername, setAuth, setAvatar } =
         useAuth();
     useClickOutside(modalRef, () => setIsModalOpen(false));
+
+    const stayInChat = () => setIsModalOpen(false);
 
     const leaveChat = async () => {
         const colRef = collection(db, "messages");
@@ -37,13 +40,31 @@ function Modal({ setIsModalOpen }) {
 
     return (
         <div className="bg-[rgba(0,0,0,0.7)] backdrop-blur-sm fixed inset-0 z-[2] flex justify-center items-center">
-            <div
+            <motion.div
                 ref={modalRef}
-                className="w-[80%] min-h-[15rem] bg-gray-100 rounded-xl flex flex-col justify-between p-4"
+                initial={{ opacity: 0, y: -50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="w-[80%] min-h-[10rem] bg-gradient-to-bl from-[#D3CCE3] to-[#E9E4F0] rounded-2xl flex flex-col justify-between p-4 text-gray-950"
             >
-                <h1 className="text-center">Do you want to leave the chat?</h1>
-                <button onClick={leaveChat}>Leave</button>
-            </div>
+                <h1 className="text-center text-xl font-semibold">
+                    Do you want to leave the chat?
+                </h1>
+                <div className="flex justify-center gap-12">
+                    <button
+                        onClick={stayInChat}
+                        className="border-none outline-none px-6 py-2 rounded-xl bg-green-600 text-xl text-gray-200 font-semibold"
+                    >
+                        NO
+                    </button>
+                    <button
+                        onClick={leaveChat}
+                        className="border-none outline-none px-6 py-2 rounded-xl bg-red-600 text-xl text-gray-200 font-semibold"
+                    >
+                        YES
+                    </button>
+                </div>
+            </motion.div>
         </div>
     );
 }

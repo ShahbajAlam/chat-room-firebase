@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { Toaster } from "react-hot-toast";
 import { signInAnonymously } from "firebase/auth";
 
 import { errorToast } from "../toasts/errorToast";
@@ -7,13 +6,14 @@ import { auth } from "../config/firebase/firebase";
 import { useAuth } from "../context/AuthContext";
 
 function Login() {
-    const { username, setUsername, setAuth, avatar, setAvatar } = useAuth();
+    const { username, room, setUsername, setRoom, setAuth, avatar, setAvatar } =
+        useAuth();
 
     const signin = (e) => {
         e.preventDefault();
 
-        if (!username || !avatar) {
-            errorToast("Enter your username and avatar");
+        if (!username || !room || !avatar) {
+            errorToast("Please enter all the fields");
             return;
         }
 
@@ -24,6 +24,7 @@ function Login() {
                 localStorage.setItem(
                     "auth",
                     JSON.stringify({
+                        room,
                         avatar,
                         username,
                         userID: data.user.uid,
@@ -41,7 +42,6 @@ function Login() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
         >
-            <Toaster />
             <label htmlFor="username" className="text-lg mb-2">
                 Username
             </label>
@@ -51,6 +51,17 @@ function Login() {
                 maxLength={15}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+                className="w-full bg-[#bdcff0] border-none outline-none rounded-lg text-lg px-2 py-1 mb-2 caret-[#243B55] text-black"
+            />
+
+            <label htmlFor="room" className="text-lg mb-2">
+                Room
+            </label>
+            <input
+                id="room"
+                type="number"
+                value={room}
+                onChange={(e) => setRoom(e.target.value)}
                 className="w-full bg-[#bdcff0] border-none outline-none rounded-lg text-lg px-2 py-1 mb-2 caret-[#243B55] text-black"
             />
 

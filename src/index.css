@@ -11,6 +11,10 @@
     font-family: "Montserrat", sans-serif;
 }
 
+::-webkit-scrollbar {
+    display: none;
+}
+
 .message_animation {
     animation-name: bounce;
     animation-duration: 300ms;
