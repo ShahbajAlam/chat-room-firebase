@@ -63,6 +63,7 @@ function Login() {
             <input
                 id="room"
                 type="number"
+                maxLength={5}
                 value={room}
                 onChange={(e) => setRoom(e.target.value)}
                 className="w-full bg-[#bdcff0] border-none outline-none rounded-lg text-lg px-2 py-1 mb-2 caret-[#243B55] text-black md:text-2xl md:px-3 md:py-2"
