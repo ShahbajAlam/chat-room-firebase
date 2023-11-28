@@ -13,10 +13,10 @@ function MyMessage({ message, userName, time, avatar }) {
                 <img
                     src={avatar}
                     alt="avatar"
-                    className="w-[2rem] rounded-full"
+                    className="w-[2rem] rounded-full md:w-[3rem] lg:w-[2rem]"
                 />
             </div>
-            <p className="text-right text-xs text-gray-50 font-light me-[2.5rem]">
+            <p className="text-right text-xs text-gray-50 font-light me-[2.5rem] md:text-lg md:me-[3.5rem] lg:text-xs">
                 {timeFormatter(time)}
             </p>
         </div>

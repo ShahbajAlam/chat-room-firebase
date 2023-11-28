@@ -24,7 +24,7 @@ function ChatPage() {
             errorToast("Enter a message");
             return;
         }
-        
+
         const colRef = collection(db, "messages");
         try {
             await addDoc(colRef, {
@@ -92,7 +92,7 @@ function ChatPage() {
     }, []);
 
     return (
-        <div className="w-full h-screen flex flex-col justify-between items-center">
+        <div className="w-full h-screen flex flex-col justify-between items-center md:w-[80%] lg:w-[60%]">
             <ChatHeader />
             <ChatBody messages={messages} />
             <ChatInput sendMessage={sendMessage} />

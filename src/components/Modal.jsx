@@ -39,27 +39,27 @@ function Modal({ setIsModalOpen }) {
     };
 
     return (
-        <div className="bg-[rgba(0,0,0,0.7)] backdrop-blur-sm fixed inset-0 z-[2] flex justify-center items-center">
+        <div className="bg-[rgba(0,0,0,0.7)] backdrop-blur-sm fixed inset-0 z-[3] flex justify-center items-center">
             <motion.div
                 ref={modalRef}
                 initial={{ opacity: 0, y: -50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                className="w-[80%] min-h-[10rem] bg-gradient-to-bl from-[#D3CCE3] to-[#E9E4F0] rounded-2xl flex flex-col justify-between p-4 text-gray-950"
+                className="w-[80%] min-h-[10rem] bg-gradient-to-bl from-[#D3CCE3] to-[#E9E4F0] rounded-2xl flex flex-col justify-between p-4 text-gray-950 md:min-h-[13rem] md:w-[60%] md:p-6 lg:w-[35%]"
             >
-                <h1 className="text-center text-xl font-semibold">
+                <h1 className="text-center text-xl font-semibold md:text-2xl lg:text-xl">
                     Do you want to leave the chat?
                 </h1>
                 <div className="flex justify-center gap-12">
                     <button
                         onClick={stayInChat}
-                        className="border-none outline-none px-6 py-2 rounded-xl bg-green-600 text-xl text-gray-200 font-semibold"
+                        className="border-none outline-none px-6 py-2 rounded-xl bg-green-600 text-xl text-gray-200 font-semibold md:text-2xl lg:text-xl"
                     >
                         NO
                     </button>
                     <button
                         onClick={leaveChat}
-                        className="border-none outline-none px-6 py-2 rounded-xl bg-red-600 text-xl text-gray-200 font-semibold"
+                        className="border-none outline-none px-6 py-2 rounded-xl bg-red-600 text-xl text-gray-200 font-semibold md:text-2xl lg:text-xl"
                     >
                         YES
                     </button>

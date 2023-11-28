@@ -13,7 +13,7 @@ function ChatBody({ messages }) {
     return (
         <ScrollToBottom
             initialScrollBehavior="smooth"
-            className="w-full p-2 basis-[80%] grow overflow-scroll bg-transparent"
+            className="w-full p-2 basis-[80%] grow overflow-scroll bg-transparent relative"
         >
             {messages.map((msg) => {
                 if (msg.username === username && msg.type === "welcome")

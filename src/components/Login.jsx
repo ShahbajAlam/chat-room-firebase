@@ -37,12 +37,15 @@ function Login() {
     return (
         <motion.form
             onSubmit={signin}
-            className="p-4 rounded-xl bg-gradient-to-bl from-[#22314e] to-[#243B55] w-[90%] flex flex-col items-start text-gray-100"
+            className="p-4 rounded-xl bg-gradient-to-bl from-[#22314e] to-[#243B55] w-[90%] flex flex-col items-start text-gray-100 md:w-[70%] md:p-8 lg:w-[45%]"
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
         >
-            <label htmlFor="username" className="text-lg mb-2">
+            <label
+                htmlFor="username"
+                className="text-lg mb-2 md:text-2xl md:mb-3"
+            >
                 Username
             </label>
             <input
@@ -51,10 +54,10 @@ function Login() {
                 maxLength={15}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full bg-[#bdcff0] border-none outline-none rounded-lg text-lg px-2 py-1 mb-2 caret-[#243B55] text-black"
+                className="w-full bg-[#bdcff0] border-none outline-none rounded-lg text-lg px-2 py-1 mb-2 caret-[#243B55] text-black md:text-2xl md:px-3 md:py-2"
             />
 
-            <label htmlFor="room" className="text-lg mb-2">
+            <label htmlFor="room" className="text-lg mb-2 md:text-2xl md:mb-3">
                 Room
             </label>
             <input
@@ -62,17 +65,17 @@ function Login() {
                 type="number"
                 value={room}
                 onChange={(e) => setRoom(e.target.value)}
-                className="w-full bg-[#bdcff0] border-none outline-none rounded-lg text-lg px-2 py-1 mb-2 caret-[#243B55] text-black"
+                className="w-full bg-[#bdcff0] border-none outline-none rounded-lg text-lg px-2 py-1 mb-2 caret-[#243B55] text-black md:text-2xl md:px-3 md:py-2"
             />
 
-            <p className="text-lg mb-2">Choose an avatar</p>
+            <p className="text-lg mb-2 md:text-2xl md:mb-3">Choose an avatar</p>
             <div className="self-center flex justify-center items-center gap-8 mb-2">
                 <label htmlFor="man">
                     <img
+                        role="button"
                         src="man.png"
                         alt="man avatar"
-                        width={48}
-                        className={`${
+                        className={`w-[48px] md:w-[64px] ${
                             avatar === "man.png"
                                 ? "border-4 rounded-full border-green-400"
                                 : ""
@@ -90,10 +93,10 @@ function Login() {
 
                 <label htmlFor="woman">
                     <img
+                        role="button"
                         src="woman.png"
                         alt="woman avatar"
-                        width={48}
-                        className={`${
+                        className={`w-[48px] md:w-[64px] ${
                             avatar === "woman.png"
                                 ? "border-4 rounded-full border-green-400"
                                 : ""
@@ -112,7 +115,7 @@ function Login() {
 
             <button
                 type="submit"
-                className="bg-[#308677] px-4 py-1 text-lg font-semibold rounded-lg self-end mt-2"
+                className="bg-[#308677] px-4 py-1 text-lg font-semibold rounded-lg self-end mt-2 md:text-2xl md:py-2"
             >
                 Log In
             </button>
