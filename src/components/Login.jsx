@@ -120,7 +120,7 @@ function Login() {
                 type="submit"
                 className="bg-[#308677] px-4 py-1 text-lg font-semibold rounded-lg self-end mt-2 md:text-2xl md:py-2"
             >
-                Log In
+                Join Room
             </button>
         </motion.form>
     );
