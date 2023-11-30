@@ -53,7 +53,7 @@ function Login() {
                 id="username"
                 maxLength={15}
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e) => setUsername(e.target.value.trim())}
                 className="w-full bg-[#bdcff0] border-none outline-none rounded-lg text-lg px-2 py-1 mb-2 caret-[#243B55] text-black md:text-2xl md:px-3 md:py-2"
             />
 
@@ -65,8 +65,8 @@ function Login() {
                 type="number"
                 value={room}
                 onChange={(e) => {
-                    if (e.target.value.length > 5) return;
-                    setRoom(e.target.value);
+                    if (e.target.value.trim().length > 5) return;
+                    setRoom(e.target.value.trim());
                 }}
                 className="w-full bg-[#bdcff0] border-none outline-none rounded-lg text-lg px-2 py-1 mb-2 caret-[#243B55] text-black md:text-2xl md:px-3 md:py-2"
             />

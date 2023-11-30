@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 function ChatInput({ sendMessage }) {
     const [messageInput, setMessageInput] = useState("");
@@ -9,7 +9,7 @@ function ChatInput({ sendMessage }) {
                 type="text"
                 value={messageInput}
                 placeholder="Type your message..."
-                onChange={(e) => setMessageInput(e.target.value)}
+                onChange={(e) => setMessageInput(e.target.value.trim())}
                 onKeyDown={(e) => {
                     if (e.key === "Enter") {
                         sendMessage("message", messageInput);
